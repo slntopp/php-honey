@@ -1,0 +1,3 @@
+outlet,batch,varietal,jars
+{% for b in batches %}{{ outlet.name }},{{ b.id }},{{ b.varietal }},{{ b.jars }}
+{% endfor %}

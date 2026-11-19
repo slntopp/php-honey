@@ -8,8 +8,9 @@ moisture, HMF) to each batch, and route finished batches to retailers and
 farmers' markets.
 
 > ⚠️ **Deliberately vulnerable.** This repository is a test fixture for security
-> scanners. It contains vulnerable dependencies, an outdated PHP runtime
-> (PHP2Shell, CVE-2026-109618 / CVE-2026-109619) and insecure code on purpose.
+> scanners. It contains vulnerable dependencies (Composer, npm, PyPI and a
+> GitHub Action), an outdated PHP runtime (PHP2Shell, CVE-2026-109618 /
+> CVE-2026-109619), an outdated Python base image and insecure code on purpose.
 > Never deploy it anywhere reachable.
 
 ## Features
@@ -20,6 +21,7 @@ farmers' markets.
 - **Jar labels** — print batch labels on the co-op's label printer.
 - **Lab reports** — upload pollen and moisture analyses per batch.
 - **Distribution** — plan delivery routes to retailers, track stock per outlet.
+- **Stock export** — a nightly worker sends each outlet its batches as a CSV.
 
 ## Run
 
@@ -30,6 +32,12 @@ docker run --rm -p 8080:80 php-honey
 
 Then open http://localhost:8080/.
 
+The stock export worker is its own image:
+
+```sh
+docker build -t php-honey-worker worker/
+```
+
 ## Layout
 
 | Path | What |
@@ -39,3 +47,5 @@ Then open http://localhost:8080/.
 | `templates/` | Twig templates |
 | `config/` | configuration |
 | `assets/` | front-end build (route map, charts) |
+| `worker/` | stock export worker (Python) |
+| `.github/workflows/` | CI: builds the assets and the image |

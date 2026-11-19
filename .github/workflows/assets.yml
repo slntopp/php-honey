@@ -1,0 +1,35 @@
+name: assets
+
+on:
+  push:
+    branches: [main]
+    paths: ["assets/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci && npm run build
+        working-directory: assets
+      - uses: actions/upload-artifact@v4.3.1
+        with:
+          name: route-map
+          path: public/js
+
+  image:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4.1.2
+        with:
+          name: route-map
+          path: public/js
+      - run: docker build -t php-honey .

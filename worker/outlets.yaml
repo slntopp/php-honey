@@ -1,0 +1,7 @@
+outlets:
+  - name: Farmers' market, Saturday stall
+    varietal: wildflower
+    inbox: https://market.honeyflow.example/stock
+  - name: Corner deli
+    varietal: acacia
+    inbox: https://deli.honeyflow.example/inbox
